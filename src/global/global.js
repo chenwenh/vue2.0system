@@ -87,10 +87,10 @@ export const global = {
               succCallBack();
             }
             else{
-              self.succMsg(errTitle);
+              self.errMsg(errTitle);
             }
           }, function (res) {
-             self.succMsg(errTitle);
+             self.errMsg(errTitle);
           })
       },
     //message成功提示
