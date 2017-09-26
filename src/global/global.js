@@ -31,7 +31,7 @@ export const global = {
             if(response.body.result=='invalidSession'){
                 Cookies.remove('userToken');
                 Cookies.remove('userId');
-                this.$router.push('/login');
+                window.reload();
             }
             sucCb(response);
             if(isLoading){

@@ -30,6 +30,7 @@
         methods:{
             submit(){
                  let vm=this;
+                 console.log(this.title);
                  if(this.title=='添加'){
                     global.submitCommon('/city-tucs-contr/parametersTypeSys/save?',vm.formCustom,function(){vm.$emit('submit')},'添加成功','添加失败');
                 }
@@ -41,7 +42,6 @@
             },
             //取消窗口关闭并且表单清空
             close(){
-                console.log(this.title);
                 let vm=this;
                 global.resetForm(vm.formCustom);//表单数据清空
                 this.$emit('dialogVisible');//表单关闭。
