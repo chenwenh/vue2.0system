@@ -1,13 +1,28 @@
 <template>
     <div class="layout">
-        <Navbar></Navbar>
+        <Navbar @toggleSideBar="toggleSideBar"></Navbar>
         <!--左侧导航菜单-->
-        <div class="sidebar" >
-            <el-menu class="el-menu-vertical-demo" :collapse="collapse">
+        <div class="sidebar">
+            <!--<el-menu class="el-menu-vertical-demo" :collapse="collapse">
                 <template v-for="(item,index) in items">
                     <el-submenu :index="index+''" >
                         <template slot="title"><i class="el-icon-menu"></i>{{item.head}}</template>
                         <el-menu-item v-for="child in item.children" :index="child.code" :key="child.code" ><span @click="createTab(child.href,child.label)">{{child.label}}</span></el-menu-item>
+                    </el-submenu>
+                </template>
+            </el-menu>-->
+            <el-menu class="el-menu-vertical-demo"  :collapse="isCollapse">
+                <template v-for="(item,index) in items">
+                    <el-submenu :index="index+''">
+                        <template slot="title">
+                            <i class="el-icon-message"></i>
+                            <span slot="title">{{item.head}}</span>
+                        </template>
+                        <template v-for="child in item.children">
+                            <el-menu-item :index="child.code">
+                                <span slot="title" @click="createTab(child.href,child.label)">{{child.label}}</span>
+                            </el-menu-item>
+                        </template>
                     </el-submenu>
                 </template>
             </el-menu>
@@ -16,13 +31,13 @@
         <div class="tabs-wrap clearfix">
             <ul class="mt10 clearfix">
                 <li :class="currentTab==v.key?'active':''" @click="changeTab(v.key)" v-for="(v, index) in tabItems">{{v.label}}
-                    <i  @click.stop="closeTab(index,v.key)" title="关闭"></i>
+                    <i @click.stop="closeTab(index,v.key)" title="关闭"></i>
                 </li>
             </ul>
             <span @click="closeTab()">关闭所有</span>
         </div>
         <!--对应的路由显示部分-->
-        <div style="margin-left:220px;margin-right:20px;padding-top:10px;">
+        <div style="margin-right:20px;padding-top:10px;" class="content">
             <keep-alive>
                 <router-view :refresh="refresh" @childcreatetab="createTab" @childclosetab="closeTab"></router-view>
             </keep-alive>
@@ -37,7 +52,7 @@
       return {
         currentTab: "",
         refresh: true,
-        collapse:false,
+        isCollapse:false,
         tabItems: [
             {
                 label:'首页',
@@ -48,8 +63,8 @@
         //左侧sidebar
         items:
             [
-                {head: "用户管理", type: "ionic",children:[{code: "50", label: "表单验证", href: "/mainComponent/form", parent_code: "49", idx: "11", id: "50"}]},
-                {head: "用户管理", type: "ionic",children:[{code: "52", label: "权限管理", href: "/mainComponent/authority", parent_code: "49", idx: "11", id: "50"}]}
+                {head: "用户管理", type: "ionic",children:[{code: "50", label: "表单验证", href: "/mainComponent/form", parent_code: "49", idx: "11", id: "52"}]},
+                {head: "用户管理", type: "ionic",children:[{code: "52", label: "权限管理", href: "/mainComponent/authority", parent_code: "49", idx: "11", id: "53"}]}
             ],
       }
     },
@@ -61,8 +76,24 @@
         $('.tabs-wrap ul li:nth-child(1) i').hide();//第一个tab的图标不显示。
         this.$router.push('/mainComponent/home');
         this.currentTab = '/mainComponent/home';//初始化时显示组件
+        $('.sidebar').css({"height":$(window).height()-45});
+        if(this.isCollapse){
+            $('.content').css({"margin-left":"80px"});
+        }
+        else{
+            $('.content').css({"margin-left":"220px"});
+        }
     },
     methods: {
+        toggleSideBar(){
+            this.isCollapse=!this.isCollapse;
+             if(this.isCollapse){
+                $('.content').css({"margin-left":"80px"});
+            }
+            else{
+                $('.content').css({"margin-left":"220px"});
+            }
+        },
         //创建tab标签
         createTab(key,label) {
             var newItem={
@@ -121,17 +152,21 @@
     /*左侧菜单栏*/
     
     .sidebar {
-        position: fixed;
+        /*position: fixed;
         top: 40px;
         left: 0;
         height: 100%;
         text-align: left;
         overflow: auto;
         width: 200px;
-        z-index: 30;
+        z-index: 30;*/
+        float:left;
+        margin-top:40px;
         background: #eef1f6;
     }
-    
+    .content{
+        margin-left:80px;
+    }
     ::-webkit-scrollbar {
         width: 0px;
         height: 1px;
@@ -182,14 +217,15 @@
     
     .tabs-wrap {
         padding-top: 50px;
-        margin-left: 200px;
+        margin-left: 80px;
         overflow: hidden;
         border-bottom: 1px solid #ccc;
-        position:relative;
+        position: relative;
     }
-    .tabs-wrap span{
-        position:absolute;
-        right:20px;
+    
+    .tabs-wrap span {
+        position: absolute;
+        right: 20px;
         list-style: none;
         float: left;
         margin: 4px 0 0 4px;
@@ -201,7 +237,7 @@
         background-color: #efefef;
         font-size: 14px;
         padding: 7px 10px 7px 10px;
-        }
+    }
     
     .tabs-wrap ul li {
         list-style: none;
@@ -221,6 +257,7 @@
     .tabs-wrap ul li:nth-child(1) {
         padding: 7px 12px;
     }
+    
     .tabs-wrap ul li i:nth-child(1) {
         background: url(../../assets/img/icon.png) no-repeat;
         width: 14px;
