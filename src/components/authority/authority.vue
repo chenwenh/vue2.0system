@@ -43,7 +43,7 @@
           {label:"区域一",value:'shanghai'},
           {label:'区域二',value:'beijing'}
         ],
-        dialogVisible:true,
+        dialogVisible:false,
         multipleSelection:[],
         size:20,
         total:0,
@@ -59,8 +59,15 @@
             this.search();//重新请求表格数据。
         }
     },
+    created(){
+
+    },
     mounted(){
-      this.dialogVisible=false;
+      let vm=this;
+      this.dialogVisible=true;
+      this.$nextTick(function () {
+        vm.dialogVisible=false;
+      });
     },
     components:{
         pagePagination,

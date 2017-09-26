@@ -2,8 +2,8 @@
     <div class="layout">
         <Navbar></Navbar>
         <!--左侧导航菜单-->
-        <div class="sidebar">
-            <el-menu class="el-menu-vertical-demo">
+        <div class="sidebar" >
+            <el-menu class="el-menu-vertical-demo" :collapse="collapse">
                 <template v-for="(item,index) in items">
                     <el-submenu :index="index+''" >
                         <template slot="title"><i class="el-icon-menu"></i>{{item.head}}</template>
@@ -37,6 +37,7 @@
       return {
         currentTab: "",
         refresh: true,
+        collapse:false,
         tabItems: [
             {
                 label:'首页',
@@ -45,17 +46,16 @@
         ],
        
         //左侧sidebar
-        isCollapse:false,
         items:
             [
                 {head: "用户管理", type: "ionic",children:[{code: "50", label: "表单验证", href: "/mainComponent/form", parent_code: "49", idx: "11", id: "50"}]},
-                {head: "用户管理", type: "ionic",children:[{code: "50", label: "权限管理", href: "/mainComponent/authority", parent_code: "49", idx: "11", id: "50"}]}
+                {head: "用户管理", type: "ionic",children:[{code: "52", label: "权限管理", href: "/mainComponent/authority", parent_code: "49", idx: "11", id: "50"}]}
             ],
       }
     },
      components: {
         Navbar,
-      },
+    },
     mounted:function(){
         let vm=this;
         $('.tabs-wrap ul li:nth-child(1) i').hide();//第一个tab的图标不显示。
@@ -88,7 +88,6 @@
             }
             this.$router.push(key);
             this.currentTab = key;
-            //console.log(this.refresh);
         },
         //切换tab
         changeTab(key) {

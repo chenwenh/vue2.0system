@@ -2,13 +2,14 @@
     <div>
         <div class="header">
             <span class="title">后台管理系统</span>
-            <el-popover ref="popover1" placement="right" width="200" trigger="hover" content="菜单栏展开或收缩">
-            </el-popover>
-            <i class="fa fa-bars" v-popover:popover1 @click="toggleSideBar"></i>
-            <div class="right">
-                <span @click="dialogFormVisible = true">修改密码</span>
-                <span @click="logout">退出登录</span>
-            </div>
+            <!--<el-popover ref="popover1" placement="right" width="200" trigger="hover" content="菜单栏展开或收缩">
+            </el-popover>-->
+            <!--<i class="fa fa-bars" v-popover:popover1 @click="toggleSideBar"></i>-->
+            <ul class="right">
+                <li><span style="color:white;font-size:14px;">{{userName+'('+roleName+')'}}</span></li>
+                <li><i class="el-icon-edit"></i><span @click="dialogFormVisible = true">修改密码</span></li>
+                <li><i class="el-icon-setting "></i><span @click="logout">退出登录</span></li>
+            </ul>
         </div>
         <el-dialog title="收货地址" :visible.sync="dialogFormVisible" >
             <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
@@ -30,6 +31,7 @@
     </div>
 </template>
 <script>
+    import {global} from './../../global/global';
     export default{
         data(){
             var validatePass = (rule, value, callback) => {
@@ -58,6 +60,8 @@
                     checkPass: '',
                     beforePass: ''
                 },
+                userName:'',
+                roleName:'',
                 rules2: {
                     beforePass:[
                         { required: true, message: '请输入原密码', trigger: 'blur' },
@@ -73,6 +77,14 @@
         },
         components:{
 
+        },
+        mounted(){
+            //获取用户信息。
+            let vm=this;
+            global.get(`/city-tucs-contr/user/getCurrentUserStatus`,{ params:null},function (res) {
+                vm.userName=res.body.bean.userName;
+                vm.roleName=res.body.bean.roleName;
+            })
         },
         methods:{
             toggleSideBar(){
@@ -105,27 +117,38 @@
         width: 100%;
         height: 40px;
         line-height: 40px;
-        background: #CCC;
+        background: #3c8dbc;
         position: fixed;
         top: 0;
         left: 0;
         z-index: 10;
+        color:white;
     }
     
     .title {
         width: 200px;
         text-align: center;
         display: inline-block;
-        color: black;
+        color: white;
     }
     
     i {
         cursor: pointer;
+        margin-right:3px;
     }
     
     .right {
         float: right;
         padding-right: 30px;
         cursor: pointer;
+    }
+    .right li{
+        float:left;
+        list-style:none;
+        padding:0 20px;
+        
+    }
+    .right li:hover{
+        background:rgb(54,127,165);
     }
 </style>

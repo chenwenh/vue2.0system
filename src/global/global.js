@@ -31,7 +31,13 @@ export const global = {
             if(response.body.result=='invalidSession'){
                 Cookies.remove('userToken');
                 Cookies.remove('userId');
-                window.reload();
+                MessageBox.alert('请重新登录', '提示', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                        window.location.reload();
+                    }
+                });
+                return;
             }
             sucCb(response);
             if(isLoading){
@@ -40,6 +46,7 @@ export const global = {
         }, (response) => {
             // 响应错误回调
             errorCb(response);
+            console.log('请求失败');
             if(isLoading){
                loadingInstance.close();
             }
