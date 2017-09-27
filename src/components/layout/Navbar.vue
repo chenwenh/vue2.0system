@@ -112,7 +112,7 @@
         }
     }
 </script>
-<style>
+<style scoped>
     .header {
         width: 100%;
         height: 40px;
@@ -124,7 +124,11 @@
         z-index: 10;
         color:white;
     }
-    
+    .fa-bars{
+        border:2px solid white;
+        padding:4px 5px;
+        border-radius:50%;
+    }
     .title {
         width: 200px;
         text-align: center;
