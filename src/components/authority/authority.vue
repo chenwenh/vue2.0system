@@ -65,9 +65,9 @@
     mounted(){
       let vm=this;
       this.dialogVisible=true;
-      this.$nextTick(function () {
-        vm.dialogVisible=false;
-      });
+      setTimeout(function(){
+         vm.dialogVisible=false;
+      },0);
     },
     components:{
         pagePagination,

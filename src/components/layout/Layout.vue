@@ -83,6 +83,18 @@
         else{
             $('.content').css({"margin-left":"220px"});
         }
+        //窗口大小改变时，左侧菜单栏折叠和展开。
+        window.onresize=function(){
+            $('.sidebar').css({"height":$(window).height()-45});
+            if($(window).width()<1200){
+                vm.isCollapse=true;
+                $('.content').css({"margin-left":"80px"});
+            }
+            else{
+                vm.isCollapse=false;
+                $('.content').css({"margin-left":"220px"});
+            }
+        }
     },
     methods: {
         toggleSideBar(){

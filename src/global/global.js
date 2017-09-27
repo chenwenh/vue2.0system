@@ -102,11 +102,17 @@ export const global = {
       },
     //message成功提示
     succMsg(message){
-        Message.success(message);
+        Message.success({
+            message:message,
+            showClose:true
+        });
     },
     //message失败提示
     errMsg(message){
-        Message.error(message);
+        Message.error({
+            message:message,
+            showClose:true
+        });
     },
     //messageBox警告提示
     warningMesBox(message){
