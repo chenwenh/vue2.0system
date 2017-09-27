@@ -107,6 +107,13 @@ export const global = {
             showClose:true
         });
     },
+    //message操作提示
+     info(message){
+        Message.error({
+            message:message,
+            showClose:true
+        });
+    },
     //message失败提示
     errMsg(message){
         Message.error({
