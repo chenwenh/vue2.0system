@@ -3,14 +3,6 @@
         <Navbar @toggleSideBar="toggleSideBar"></Navbar>
         <!--左侧导航菜单-->
         <div class="sidebar">
-            <!--<el-menu class="el-menu-vertical-demo" :collapse="collapse">
-                <template v-for="(item,index) in items">
-                    <el-submenu :index="index+''" >
-                        <template slot="title"><i class="el-icon-menu"></i>{{item.head}}</template>
-                        <el-menu-item v-for="child in item.children" :index="child.code" :key="child.code" ><span @click="createTab(child.href,child.label)">{{child.label}}</span></el-menu-item>
-                    </el-submenu>
-                </template>
-            </el-menu>-->
             <el-menu class="el-menu-vertical-demo"  :collapse="isCollapse">
                 <template v-for="(item,index) in items">
                     <el-submenu :index="index+''">
@@ -28,6 +20,7 @@
             </el-menu>
         </div>
         <!--tab页形成-->
+        <div class="box">
         <div class="tabs-wrap clearfix">
             <ul class="mt10 clearfix">
                 <li :class="currentTab==v.key?'active':''" @click="changeTab(v.key)" v-for="(v, index) in tabItems">{{v.label}}
@@ -41,6 +34,7 @@
             <keep-alive>
                 <router-view :refresh="refresh" @childcreatetab="createTab" @childclosetab="closeTab"></router-view>
             </keep-alive>
+        </div>
         </div>
     </div>
 </template>
@@ -64,7 +58,8 @@
         items:
             [
                 {head: "用户管理", type: "ionic",children:[{code: "50", label: "表单验证", href: "/mainComponent/form", parent_code: "49", idx: "11", id: "52"}]},
-                {head: "用户管理", type: "ionic",children:[{code: "52", label: "权限管理", href: "/mainComponent/authority", parent_code: "49", idx: "11", id: "53"}]}
+                {head: "用户管理", type: "ionic",children:[{code: "52", label: "权限管理", href: "/mainComponent/authority", parent_code: "49", idx: "11", id: "53"}]},
+              
             ],
       }
     },
@@ -78,21 +73,21 @@
         this.currentTab = '/mainComponent/home';//初始化时显示组件
         $('.sidebar').css({"height":$(window).height()-45});
         if(this.isCollapse){
-            $('.content').css({"margin-left":"80px"});
+            $('.box').css({"margin-left":"80px"});
         }
         else{
-            $('.content').css({"margin-left":"220px"});
+            $('.box').css({"margin-left":"220px"});
         }
         //窗口大小改变时，左侧菜单栏折叠和展开。
         window.onresize=function(){
             $('.sidebar').css({"height":$(window).height()-45});
             if($(window).width()<1200){
                 vm.isCollapse=true;
-                $('.content').css({"margin-left":"80px"});
+                $('.box').css({"margin-left":"80px"});
             }
             else{
                 vm.isCollapse=false;
-                $('.content').css({"margin-left":"220px"});
+                $('.box').css({"margin-left":"220px"});
             }
         }
     },
@@ -100,10 +95,10 @@
         toggleSideBar(){
             this.isCollapse=!this.isCollapse;
              if(this.isCollapse){
-                $('.content').css({"margin-left":"80px"});
+                $('.box').css({"margin-left":"80px"});
             }
             else{
-                $('.content').css({"margin-left":"220px"});
+                $('.box').css({"margin-left":"220px"});
             }
         },
         //创建tab标签
@@ -164,20 +159,13 @@
     /*左侧菜单栏*/
     
     .sidebar {
-        /*position: fixed;
-        top: 40px;
-        left: 0;
-        height: 100%;
-        text-align: left;
-        overflow: auto;
-        width: 200px;
-        z-index: 30;*/
-        float:left;
+        position:fixed;
+        left:0;
+        top:0;
+        z-index:10;
         margin-top:40px;
         background: #eef1f6;
-    }
-    .content{
-        margin-left:80px;
+        overflow-y:auto;
     }
     ::-webkit-scrollbar {
         width: 0px;
@@ -229,7 +217,6 @@
     
     .tabs-wrap {
         padding-top: 50px;
-        margin-left: 80px;
         overflow: hidden;
         border-bottom: 1px solid #ccc;
         position: relative;
