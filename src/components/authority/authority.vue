@@ -31,18 +31,18 @@ let selectedColumns=[];
 export default {
   data() {
     return {
+      // 查询条件部分
       formItem: {
         name: '',
         parentMenu: ''
       },
-      loading:false,
-      title:'',
       parentMenus:[
         {label:"区域一",value:'shanghai'},
         {label:'区域二',value:'beijing'}
       ],
-      dialogVisible:false,
-      multipleSelection:[],
+      //弹出框部分
+      title:'',
+      //分页部分
       size:20,
       total:0,
       current:1,
@@ -79,6 +79,13 @@ export default {
     //查询获取表格数据。
     search(){
       let vm=this;
+      // this.$http.post(`/city-tucs-contr/parametersTypeSys/getTypeSysList?size=${vm.size}&current=${vm.current}&total=${vm.total}`,vm.formItem).then(function(res){
+      //     vm.$refs.tableComponent.tableDatas(res.data.result);//调用子组件中的方法,给表格填充数据。
+      //     vm.total=res.data.totalData;
+      //     global.tableIndex(res.data.result,vm.current,vm.size);//表格数据序号
+      // },function(error){
+        
+      // })
       global.get(`/city-tucs-contr/parametersTypeSys/getTypeSysList?size=${vm.size}&current=${vm.current}&total=${vm.total}`,{ params:vm.formItem},function (res) {
         if(res.body.success){
           vm.$refs.tableComponent.tableDatas(res.body.result);//调用子组件中的方法,给表格填充数据。

@@ -1,8 +1,9 @@
 <template>
+ 
     <el-dialog :title="title" :visible.sync="dialogVisible" size="tiny" style="padding-bottom:20px;">
         <el-form :inline="true" :model="formCustom" class="demo-form-inline" ref="formCustom" label-width="100px">
             <el-form-item label="参数类型名称" prop="name">
-                <el-input v-model="formCustom.name"></el-input>
+                <el-input v-model="formCustom.name" ></el-input>
             </el-form-item>
             <el-form-item label="参数类型" prop="code">
                 <el-input v-model="formCustom.code"></el-input>
@@ -28,18 +29,21 @@
             }
         },
         props:['title'],
+        mounted(){
+           
+        },
         methods:{
             //点击确定提交时
             submit(){
-                 let vm=this;
-                 console.log(this.title);
-                 if(this.title=='添加'){
+                let vm=this;
+                console.log(this.title);
+                if(vm.title=='添加'){
                     global.submitCommon('/city-tucs-contr/parametersTypeSys/save?',vm.formCustom,function(){vm.$emit('submit')},'添加成功','添加失败');
                 }
-                else if(this.title=='编辑'){
+                else if(vm.title=='编辑'){
                     global.submitCommon('/city-tucs-contr/parametersTypeSys/update',vm.formCustom,function(){vm.$emit('submit')},'编辑成功','编辑失败');
                 }
-                this.close();
+                vm.close();
             },
             //取消窗口关闭并且表单清空
             close(){

@@ -58,8 +58,12 @@
         items:
             [
                 {head: "用户管理", type: "ionic",children:[{code: "50", label: "表单验证", href: "/mainComponent/form", parent_code: "49", idx: "11", id: "52"}]},
-                {head: "用户管理", type: "ionic",children:[{code: "52", label: "权限管理", href: "/mainComponent/authority", parent_code: "49", idx: "11", id: "53"}]},
-              
+                {head: "用户管理", type: "ionic",children:[{code: "51", label: "权限管理", href: "/mainComponent/authority", parent_code: "49", idx: "11", id: "53"}]},
+                {head: "机构信息", type: "ionic",children:[
+                    {code: "52", label: "机构信息", href: "/mainComponent/instituInfo", parent_code: "49", idx: "11", id: "53"},
+                    {code: "53", label: "机构管理", href: "/mainComponent/institution_ver2", parent_code: "49", idx: "11", id: "53"},
+                ]},
+                {head: "报表信息", type: "ionic",children:[{code: "54", label: "消费交易汇总", href: "/mainComponent/consumerTransactionSummary", parent_code: "49", idx: "11", id: "53"}]},
             ],
       }
     },
@@ -78,6 +82,13 @@
         else{
             $('.box').css({"margin-left":"220px"});
         }
+        //登录成功的提示
+        this.$notify({
+          title: '登录成功',
+          message: '欢迎进入后台管理系统',
+          type: 'success',
+          offset: 100
+        });
         //窗口大小改变时，左侧菜单栏折叠和展开。
         window.onresize=function(){
             $('.sidebar').css({"height":$(window).height()-45});
@@ -90,6 +101,7 @@
                 $('.box').css({"margin-left":"220px"});
             }
         }
+         
     },
     methods: {
         toggleSideBar(){
@@ -156,6 +168,20 @@
   }
 </script>
 <style scoped>
+    .layout{
+        height:100%;
+    }
+    .box{height:100%;}
+    .box .content{ 
+        height:-moz-calc(100% - 100px); 
+        height:-webkit-calc(100% - 100px);
+        height: calc(100% - 100px);}
+    .box .content div:nth-child(1){
+        height:100%;
+    }
+    .box .content div:nth-child(1) .left{
+       height:100%;
+    }
     /*左侧菜单栏*/
     
     .sidebar {
@@ -165,7 +191,6 @@
         z-index:10;
         margin-top:40px;
         background: #eef1f6;
-        overflow-y:auto;
     }
     ::-webkit-scrollbar {
         width: 0px;

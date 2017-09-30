@@ -1,7 +1,7 @@
 <template>
-    <div class="welcome" style="border:none;">
+    <p class="welcome" style="border:none;">
        <i class="el-icon-circle-check" style="font-size:30px;color:#0c6"></i><span>欢迎进入后台管理系统</span>
-    </div>
+    </p>
 </template>
 <style>
     .welcome{

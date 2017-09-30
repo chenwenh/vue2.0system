@@ -1,5 +1,7 @@
 <template>
     <div>
+        <input v-model="names">
+        <el-button type="primary" icon="plus" @click="first()" v-waves>传到另一个组件</el-button>
         <el-button-group style="margin-bottom:3px;">
             <el-button type="primary" icon="plus" @click="add()" v-waves>添加</el-button>
             <el-button type="danger" icon="delete" @click="moreDelete()" v-waves>批量删除</el-button>
@@ -27,6 +29,7 @@
     </div>
 </template>
 <script>
+import bus from './../../assets/js/eventBus'
 import {global} from '../../global/global';
 let selectedColumns=[];
 export default{
@@ -44,12 +47,16 @@ export default{
                 key: 'code',
             },
             ],
+            names:'',
         }
     },
     mounted(){
-      this.height=global.tableHeight();
+      this.height=global.tableHeight(200);
     },
     methods:{
+        first(){
+            bus.$emit('second',this.names);
+        },
         tableDatas(res){
             this.tableData=res;
         },
@@ -120,10 +127,10 @@ export default{
             let vm=this;
             var length=selectedColumns.length;
             if(length==0){
-            global.warningMesBox('请选择要禁用的项');
+                global.warningMesBox('请选择要禁用的项');
             }
             else{
-            this.disableCommon('确定禁用吗？',selectedColumns);
+                this.disableCommon('确定禁用吗？',selectedColumns);
             }
         },
         handleSelectionChange(val) {

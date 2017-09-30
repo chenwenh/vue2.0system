@@ -22,9 +22,9 @@ export const global = {
             return false;
         }
         //遮罩层
-        if(isLoading){
-            var loadingInstance = Loading.service({text:"拼命加载中"});
-        }
+        // if(isLoading){
+        //     var loadingInstance = Loading.service({text:"拼命加载中"});
+        // }
         Vue.http.get(url, options).then((response) => {
             // 响应成功回调
             //返回请求失效时。
@@ -40,16 +40,16 @@ export const global = {
                 return;
             }
             sucCb(response);
-            if(isLoading){
-                loadingInstance.close();
-            }
+            // if(isLoading){
+            //     loadingInstance.close();
+            // }
         }, (response) => {
             // 响应错误回调
             errorCb(response);
             console.log('请求失败');
-            if(isLoading){
-               loadingInstance.close();
-            }
+            // if(isLoading){
+            //    loadingInstance.close();
+            // }
         })
     },
     //关闭弹出框时，内容清空
@@ -91,7 +91,7 @@ export const global = {
         self.get(url,{ params:params},function (res) {
             if(res.body.result){
               self.succMsg(sussTitle);
-              succCallBack();
+              succCallBack(res);
             }
             else{
               self.errMsg(errTitle);
@@ -126,8 +126,8 @@ export const global = {
         MessageBox.alert(message,'提示'); 
     },
     //控制表格高度
-    tableHeight(){
-        var height= $(window).height()-$('.header').height()-$('.formSearch').height()-200;
+    tableHeight(num){
+        var height= $(window).height()-$('.header').height()-$('.formSearch').height()-num;
         return height;
     },
     //表格每页序号排序
@@ -140,5 +140,32 @@ export const global = {
             }
         },0);
     },
+    //保留几位小数
+    toDecimal(x,num) {
+        var val = Number(x)
+        if(!isNaN(parseFloat(val))) {
+            val = val.toFixed(num);
+            return val;
+        }
+        else{
+            return '0';
+        }
+    },
+    //日期格式转化 格式为2017-06-06
+    timeTransfer(value){
+        if(value == '' || value == undefined) return '';
+        let values=new Date(value);
+        var year=values.getFullYear();
+        var month=values.getMonth()+1;
+        if(month<10){
+            month='0'+month;
+        }
+        var date=values.getDate();
+        if(date<10){
+            date='0'+date;
+        }
+        return year+'-'+month+'-'+date;
+    },
+
 };
 

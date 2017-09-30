@@ -2,8 +2,7 @@
     <div>
         <div class="header">
             <span class="title">后台管理系统</span>
-            <el-popover ref="popover1" placement="right" width="200" trigger="hover" content="菜单栏展开或收缩">
-            </el-popover>
+            <el-popover ref="popover1" placement="right" width="200" trigger="hover" content="菜单栏展开或收缩"></el-popover>
             <i class="fa fa-bars" v-popover:popover1 @click="toggleSideBar"></i>
             <ul class="right">
                 <li><span style="color:white;font-size:14px;">{{userName+'('+roleName+')'}}</span></li>
@@ -134,6 +133,7 @@
         text-align: center;
         display: inline-block;
         color: white;
+        font-size:16px;
     }
     
     i {

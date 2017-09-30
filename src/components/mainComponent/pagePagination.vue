@@ -9,9 +9,11 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+       <input v-model="names">
   </div>
 </template>
 <script>
+    import bus from './../../assets/js/eventBus'
   export default {
     methods: {
       handleSizeChange(val) {
@@ -22,8 +24,15 @@
       }
     },
     props:['total','size','current'],
+    mounted(){
+      let vm=this;
+      bus.$on('second',function(msg){
+        vm.names=msg;
+      });
+    },
     data() {
       return {
+        names:'',
       };
     }
   }
