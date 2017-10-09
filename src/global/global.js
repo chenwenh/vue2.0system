@@ -52,6 +52,45 @@ export const global = {
             // }
         })
     },
+
+    //post 请求
+    post: function (url, options, sucCb, errorCb, isLoading = true) {
+        if (!url) {
+            console.log('接口url不能为空！');
+            return false;
+        }
+        //遮罩层
+        // if(isLoading){
+        //     var loadingInstance = Loading.service({text:"拼命加载中"});
+        // }
+        Vue.http.post(url, options).then((response) => {
+            // 响应成功回调
+            //返回请求失效时。
+            if(response.body.result=='invalidSession'){
+                Cookies.remove('userToken');
+                Cookies.remove('userId');
+                MessageBox.alert('请重新登录', '提示', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                        window.location.reload();
+                    }
+                });
+                return;
+            }
+            sucCb(response);
+            // if(isLoading){
+            //     loadingInstance.close();
+            // }
+        }, (response) => {
+            // 响应错误回调
+            errorCb(response);
+            console.log('请求失败');
+            // if(isLoading){
+            //    loadingInstance.close();
+            // }
+        })
+    },
+
     //关闭弹出框时，内容清空
     resetForm: function (form) {
         for (var obj in form) {

@@ -30,7 +30,7 @@ module.exports = {
     proxyTable: {
       '/city-tucs-contr': {
         //target:'http://localhost:6826'
-        target:'http://192.168.10.177:6826'
+        target:'http://192.168.10.84:6826'
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

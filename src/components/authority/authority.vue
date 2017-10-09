@@ -23,6 +23,7 @@
   </div>
 </template>
 <script>
+import { Validator } from 'vee-validate'
 import {global} from '../../global/global';
 import pagePagination from './../mainComponent/pagePagination'
 import dialogComponent from './dialogComponent'
@@ -46,6 +47,9 @@ export default {
       size:20,
       total:0,
       current:1,
+      user: {
+        email: '',
+      }
     };
   },
   props:['refresh'],
@@ -86,7 +90,7 @@ export default {
       // },function(error){
         
       // })
-      global.get(`/city-tucs-contr/parametersTypeSys/getTypeSysList?size=${vm.size}&current=${vm.current}&total=${vm.total}`,{ params:vm.formItem},function (res) {
+      global.post(`/city-tucs-contr/parametersTypeSys/getTypeSysList?size=${vm.size}&current=${vm.current}&total=${vm.total}`,vm.formItem,function (res) {
         if(res.body.success){
           vm.$refs.tableComponent.tableDatas(res.body.result);//调用子组件中的方法,给表格填充数据。
           vm.total=res.body.totalData;
@@ -95,6 +99,15 @@ export default {
       }, function (res) {
         console.log('请求失败');
       })
+      // global.get(`/city-tucs-contr/parametersTypeSys/getTypeSysList?size=${vm.size}&current=${vm.current}&total=${vm.total}`,{ params:vm.formItem},function (res) {
+      //   if(res.body.success){
+      //     vm.$refs.tableComponent.tableDatas(res.body.result);//调用子组件中的方法,给表格填充数据。
+      //     vm.total=res.body.totalData;
+      //     global.tableIndex(res.body.result,vm.current,vm.size);//表格数据序号
+      //   }
+      // }, function (res) {
+      //   console.log('请求失败');
+      // })
     },
     //表单重置。
     resetForm(formName){

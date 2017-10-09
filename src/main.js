@@ -13,7 +13,6 @@ import vueWaves from './directive/waves';// 水波纹指令
 import Cookies from 'js-cookie';
 Vue.use(ElementUI);
 Vue.use(vueWaves);
-
 Vue.config.productionTip = false;
 
 const whiteList = ['/login','/404'];// 不重定向白名单

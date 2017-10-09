@@ -1,5 +1,4 @@
 <template>
- 
     <el-dialog :title="title" :visible.sync="dialogVisible" size="tiny" style="padding-bottom:20px;">
         <el-form :inline="true" :model="formCustom" class="demo-form-inline" ref="formCustom" label-width="100px">
             <el-form-item label="参数类型名称" prop="name">
