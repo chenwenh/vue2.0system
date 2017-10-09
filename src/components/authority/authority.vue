@@ -23,7 +23,6 @@
   </div>
 </template>
 <script>
-import { Validator } from 'vee-validate'
 import {global} from '../../global/global';
 import pagePagination from './../mainComponent/pagePagination'
 import dialogComponent from './dialogComponent'
