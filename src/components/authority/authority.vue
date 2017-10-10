@@ -20,7 +20,6 @@
     <dialog-component ref="dialogComponents" :title="title" @submit="submit"></dialog-component>
     <!--分页组件-->
     <page-pagination :total="total" :size="size" :current="current" @currentChange="currentChange" @sizeChange="sizeChange"></page-pagination>
-    
   </div>
 </template>
 <script>
